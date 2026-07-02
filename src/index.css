@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  
+  --color-brand-light: #F0F4F0;
+  --color-brand-medium: #166534;
+  --color-brand-dark: #1A3317;
+  --color-brand-gray: #F8FAF8;
+  --color-brand-charcoal: #1A3317;
+
+  /* Overriding standard families to instantly align entire app with Geometric Balance palette */
+  --color-emerald-50: #F0F4F0;
+  --color-emerald-100: #E0E7E0;
+  --color-emerald-200: #C2D1C2;
+  --color-emerald-600: #166534;
+  --color-emerald-700: #166534;
+  --color-emerald-800: #1A3317;
+  --color-emerald-900: #1A3317;
+  
+  --color-green-50: #F0F4F0;
+  --color-green-100: #E0E7E0;
+  --color-green-200: #C2D1C2;
+  --color-green-500: #22c55e;
+  --color-green-600: #166534;
+  --color-green-700: #166534;
+  --color-green-800: #1A3317;
+  --color-green-950: #1A3317;
+  
+  --color-slate-50: #F8FAF8;
+  --color-slate-100: #F0F4F0;
+  --color-slate-200: #E0E7E0;
+  --color-slate-300: #C2D1C2;
+  --color-slate-400: #8FA38F;
+  --color-slate-500: #4A5D4A;
+  --color-slate-600: #4A5D4A;
+  --color-slate-700: #1A3317;
+  --color-slate-800: #1A3317;
+  --color-slate-900: #1A3317;
+  
+  --color-theme-bg: #F8FAF8;
+  --color-theme-text: #1A3317;
+  --color-theme-primary: #166534;
+  --color-theme-accent: #22c55e;
+  --color-theme-border: #E0E7E0;
+  --color-theme-neutral: #4A5D4A;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-slate-50 text-slate-900 antialiased selection:bg-emerald-200 selection:text-emerald-900 overflow-x-hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+/* Custom premium styles */
+.glass-panel {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+}
+
+.glass-panel-dark {
+  @apply bg-slate-900/80 backdrop-blur-md border border-slate-800/50 shadow-xl;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-emerald-800 via-green-600 to-emerald-600;
+}
+
+.text-gradient-dark {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-400;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-emerald-700/30 rounded-full hover:bg-emerald-700/50 transition-colors;
+}
+
