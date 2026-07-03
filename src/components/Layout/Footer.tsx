@@ -5,7 +5,8 @@
 
 import { useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Youtube, ShieldCheck } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Youtube, ShieldCheck, Award } from 'lucide-react';
+import RevealAnimation from '../UI/RevealAnimation';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -20,174 +21,176 @@ export default function Footer() {
     }
   };
 
+  const certifications = ['ISO 22000', 'FSSAI', 'GMP', 'HACCP', 'NPOP Organic', 'PGS-India'];
+
   return (
-    <footer id="main-app-footer" className="bg-[#F8FAF8] text-[#1A3317] border-t border-[#E0E7E0] font-sans">
-      
-      {/* Top Newsletter & Contact Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-b border-[#E0E7E0]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-6 space-y-3">
-            <h3 className="text-xl font-bold text-[#1A3317] font-display">Subscribe to Our Biotech & Agronomy Journal</h3>
-            <p className="text-slate-500 text-sm max-w-lg leading-relaxed">
-              Receive quarterly breakthroughs on microalgae protein development, soil restoration metrics, and KhetiBharat success stories direct from our scientific board.
-            </p>
-          </div>
-          <div className="lg:col-span-6">
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md lg:ml-auto">
+    <footer id="main-app-footer" className="relative bg-slate-900 text-white overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(46,139,87,0.15),transparent_60%)]" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+
+      {/* Newsletter */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-b border-white/10">
+        <RevealAnimation direction="up">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="space-y-4">
+              <span className="text-amber-400 text-xs font-semibold uppercase tracking-widest">Stay Connected</span>
+              <h3 className="text-2xl sm:text-3xl font-bold font-display text-white">
+                Subscribe to Our Biotech & Agronomy Journal
+              </h3>
+              <p className="text-slate-400 text-sm max-w-lg leading-relaxed">
+                Receive quarterly breakthroughs on microalgae protein development, soil restoration metrics, and KhetiBharat success stories.
+              </p>
+            </div>
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
                 required
-                placeholder="Enter corporate or personal email"
+                placeholder="Enter your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-white border border-[#E0E7E0] rounded-xl px-4 py-3 text-sm text-[#1A3317] focus:outline-none focus:border-emerald-600 placeholder-slate-400 font-sans shadow-inner"
+                className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-5 py-4 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50"
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:scale-[0.98] text-white font-bold text-sm transition-all whitespace-nowrap cursor-pointer shadow-md"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-emerald-900/30 cursor-pointer whitespace-nowrap"
               >
-                {subscribed ? "Subscribed" : "Subscribe"}
+                {subscribed ? 'Subscribed!' : 'Subscribe'}
                 <Send className="w-4 h-4" />
               </button>
             </form>
-            {subscribed && (
-              <p className="text-emerald-700 text-xs mt-2 font-mono text-right max-w-md lg:ml-auto">
-                ✓ Thank you. Your email has been registered for our next science briefing.
-              </p>
-            )}
           </div>
-        </div>
+        </RevealAnimation>
       </div>
 
-      {/* Main Link Directory */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
-          
-          {/* Logo & Corporate Summary */}
+      {/* Main links */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4 space-y-6">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-emerald-700 text-white font-bold text-lg shadow-sm">
+            <Link to="/" className="flex items-center gap-3 group">
+              <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-500 text-white font-bold text-xl shadow-lg">
                 C
               </div>
               <div className="flex flex-col">
-                <span className="text-base font-bold font-display text-[#1A3317] tracking-tight">CYANO FOODS</span>
-                <span className="text-[8px] font-semibold font-mono tracking-wider text-emerald-700 uppercase">INDIA OPC PVT LTD</span>
+                <span className="text-lg font-bold font-display tracking-tight">CYANO FOODS</span>
+                <span className="text-[9px] font-semibold tracking-widest text-emerald-400 uppercase">India OPC Pvt Ltd</span>
               </div>
             </Link>
-            
-            <p className="text-xs text-slate-500 leading-relaxed font-sans">
-              Cyano Foods India OPC Private Limited is a global pioneer in microalgae biotechnology, climate-resilient natural agronomy, and clean functional nutrients. We bridge laboratory innovation with grassroots Indian farmer networks.
+            <p className="text-sm text-slate-400 leading-relaxed">
+              Cyano Foods India is a global pioneer in microalgae biotechnology, climate-resilient natural agronomy, and clean functional nutrients.
             </p>
-
-            <div className="space-y-3 pt-2 text-xs">
-              <div className="flex items-center gap-3">
-                <MapPin className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span className="text-slate-600">Hinjawadi, Pune, MH, India</span>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center gap-3 text-slate-300">
+                <MapPin className="w-4 h-4 text-emerald-400 shrink-0" />
+                Hinjawadi, Pune, MH, India
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span className="text-slate-600">+91 (20) 555-8392</span>
+              <div className="flex items-center gap-3 text-slate-300">
+                <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
+                +91 (20) 555-8392
               </div>
-              <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-emerald-700 shrink-0" />
-                <span className="text-slate-600">corporate@cyanofoodsindia.com</span>
+              <div className="flex items-center gap-3 text-slate-300">
+                <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
+                corporate@cyanofoodsindia.com
               </div>
+            </div>
+            <div className="flex gap-3 pt-2">
+              {[Linkedin, Twitter, Youtube].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="p-2.5 rounded-xl bg-white/10 hover:bg-emerald-600/30 text-slate-300 hover:text-white transition-all duration-300"
+                  aria-label="Social media"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Quick Links Group */}
-          <div className="lg:col-span-2 space-y-4">
-            <h4 className="text-sm font-bold text-[#1A3317] uppercase tracking-wider font-display border-l-2 border-emerald-700 pl-2">Corporate</h4>
-            <ul className="space-y-2.5 text-xs font-semibold">
-              <li><Link to="/about" className="text-slate-500 hover:text-emerald-700 transition-colors">Who We Are</Link></li>
-              <li><Link to="/research" className="text-slate-500 hover:text-emerald-700 transition-colors">Research & Biotech</Link></li>
-              <li><Link to="/sustainability" className="text-slate-500 hover:text-emerald-700 transition-colors">Sustainability & ESG</Link></li>
-              <li><Link to="/careers" className="text-slate-500 hover:text-emerald-700 transition-colors">Careers & Internships</Link></li>
-              <li><Link to="/partner" className="text-slate-500 hover:text-emerald-700 transition-colors">Partner Registry</Link></li>
-            </ul>
-          </div>
-
-          {/* Offerings Group */}
-          <div className="lg:col-span-2 space-y-4">
-            <h4 className="text-sm font-bold text-[#1A3317] uppercase tracking-wider font-display border-l-2 border-emerald-700 pl-2">Solutions</h4>
-            <ul className="space-y-2.5 text-xs font-semibold">
-              <li><Link to="/products" className="text-slate-500 hover:text-emerald-700 transition-colors">Our Product Lines</Link></li>
-              <li><Link to="/services" className="text-slate-500 hover:text-emerald-700 transition-colors">Technical Services</Link></li>
-              <li><Link to="/khetibharat" className="text-slate-500 hover:text-emerald-700 transition-colors">KhetiBharat Program</Link></li>
-              <li><Link to="/regional-council" className="text-slate-500 hover:text-emerald-700 transition-colors">Regional Councils</Link></li>
-              <li><Link to="/contact" className="text-slate-500 hover:text-emerald-700 transition-colors">Contact Relations</Link></li>
-            </ul>
-          </div>
-
-          {/* Resources Group */}
-          <div className="lg:col-span-2 space-y-4">
-            <h4 className="text-sm font-bold text-[#1A3317] uppercase tracking-wider font-display border-l-2 border-emerald-700 pl-2">Knowledge</h4>
-            <ul className="space-y-2.5 text-xs font-semibold">
-              <li><Link to="/knowledge-centre" className="text-slate-500 hover:text-emerald-700 transition-colors">Knowledge Base</Link></li>
-              <li><Link to="/news" className="text-slate-500 hover:text-emerald-700 transition-colors">News & Media Kit</Link></li>
-              <li><Link to="/downloads" className="text-slate-500 hover:text-emerald-700 transition-colors">Downloads Center</Link></li>
-              <li><Link to="/faq" className="text-slate-500 hover:text-emerald-700 transition-colors">Frequently Asked</Link></li>
-            </ul>
-          </div>
-
-          {/* Legal Compliance Group */}
-          <div className="lg:col-span-2 space-y-4">
-            <h4 className="text-sm font-bold text-[#1A3317] uppercase tracking-wider font-display border-l-2 border-emerald-700 pl-2">Compliance</h4>
-            <ul className="space-y-2.5 text-xs font-semibold">
-              <li><Link to="/legal?tab=privacy" className="text-slate-500 hover:text-emerald-700 transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/legal?tab=terms" className="text-slate-500 hover:text-emerald-700 transition-colors">Terms of Service</Link></li>
-              <li><Link to="/legal?tab=disclaimer" className="text-slate-500 hover:text-emerald-700 transition-colors">Disclaimers</Link></li>
-              <li><Link to="/legal?tab=refund" className="text-slate-500 hover:text-emerald-700 transition-colors">Refund Policies</Link></li>
-              <li><Link to="/legal?tab=shipping" className="text-slate-500 hover:text-emerald-700 transition-colors">Shipping & Returns</Link></li>
-            </ul>
-          </div>
-
+          {[
+            { title: 'Corporate', links: [
+              { to: '/about', label: 'Who We Are' },
+              { to: '/research', label: 'Research & Biotech' },
+              { to: '/sustainability', label: 'Sustainability & ESG' },
+              { to: '/careers', label: 'Careers' },
+              { to: '/partner', label: 'Partner Registry' },
+            ]},
+            { title: 'Solutions', links: [
+              { to: '/products', label: 'Our Products' },
+              { to: '/services', label: 'Technical Services' },
+              { to: '/khetibharat', label: 'KhetiBharat' },
+              { to: '/regional-council', label: 'Regional Councils' },
+              { to: '/contact', label: 'Contact' },
+            ]},
+            { title: 'Knowledge', links: [
+              { to: '/knowledge-centre', label: 'Knowledge Base' },
+              { to: '/news', label: 'News & Media' },
+              { to: '/downloads', label: 'Downloads' },
+              { to: '/faq', label: 'FAQ' },
+            ]},
+            { title: 'Compliance', links: [
+              { to: '/legal?tab=privacy', label: 'Privacy Policy' },
+              { to: '/legal?tab=terms', label: 'Terms of Service' },
+              { to: '/legal?tab=disclaimer', label: 'Disclaimers' },
+              { to: '/legal?tab=refund', label: 'Refund Policies' },
+            ]},
+          ].map((col) => (
+            <div key={col.title} className="lg:col-span-2 space-y-5">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-emerald-400 font-display">
+                {col.title}
+              </h4>
+              <ul className="space-y-3">
+                {col.links.map((link) => (
+                  <li key={link.to}>
+                    <Link
+                      to={link.to}
+                      className="text-sm text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-300 inline-flex items-center gap-1"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Geometric Bottom Feature Bar */}
-      <div className="border-t border-b border-[#E0E7E0] bg-white py-8 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 divide-y md:divide-y-0 md:divide-x divide-[#E0E7E0]">
-          <div className="p-4 md:px-6">
-            <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Core Division</p>
-            <p className="font-bold text-sm text-[#1A3317] font-display">Bio-Nutraceuticals</p>
-          </div>
-          <div className="p-4 md:px-6 pt-6 md:pt-4">
-            <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Focus Area</p>
-            <p className="font-bold text-sm text-[#1A3317] font-display">Sustainable ESG</p>
-          </div>
-          <div className="p-4 md:px-6 pt-6 md:pt-4">
-            <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Farmer Support</p>
-            <p className="font-bold text-sm text-[#1A3317] font-display">1800-FOOD-INDIA</p>
-          </div>
-          <div className="p-4 md:px-6 pt-6 md:pt-4">
-            <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Headquarters</p>
-            <p className="font-bold text-sm text-[#1A3317] font-display">Mumbai • Bengaluru</p>
+      {/* Certifications strip */}
+      <div className="relative border-t border-white/10 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {certifications.map((cert) => (
+              <div
+                key={cert}
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-slate-300"
+              >
+                <Award className="w-3.5 h-3.5 text-amber-400" />
+                {cert}
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Legal Footer & Accreditations Strip */}
-      <div className="bg-emerald-800 text-white py-6 text-xs font-medium">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-1.5 text-center md:text-left">
-            <p className="font-display tracking-wide">
+      {/* Bottom bar */}
+      <div className="relative border-t border-white/10 bg-slate-950/50 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-center md:text-left space-y-1">
+            <p className="text-sm text-slate-400">
               &copy; 2024 Cyano Foods India OPC Pvt Ltd. All Rights Reserved.
             </p>
-            <p className="text-[10px] text-emerald-200 flex items-center justify-center md:justify-start gap-1 font-mono">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
+            <p className="text-xs text-slate-500 flex items-center justify-center md:justify-start gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
               NPOP India Certified | PGS-India Verified | FSSAI Lic No: 11524999000123
             </p>
           </div>
-          
-          <div className="flex gap-6 uppercase text-[10px] tracking-widest font-bold">
-            <Link to="/legal?tab=privacy" className="hover:text-emerald-100 transition-colors">Legal & Privacy</Link>
-            <Link to="/legal?tab=terms" className="hover:text-emerald-100 transition-colors">Terms of Service</Link>
-            <Link to="/legal?tab=accessibility" className="hover:text-emerald-100 transition-colors">Accessibility</Link>
+          <div className="flex gap-6 text-xs uppercase tracking-wider font-semibold text-slate-400">
+            <Link to="/legal?tab=privacy" className="hover:text-emerald-400 transition-colors">Legal</Link>
+            <Link to="/legal?tab=terms" className="hover:text-emerald-400 transition-colors">Terms</Link>
+            <Link to="/legal?tab=accessibility" className="hover:text-emerald-400 transition-colors">Accessibility</Link>
           </div>
         </div>
       </div>
-
     </footer>
   );
 }

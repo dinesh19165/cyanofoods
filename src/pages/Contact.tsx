@@ -5,8 +5,10 @@
 
 import { useState, FormEvent } from 'react';
 import { motion } from 'motion/react';
-import { MapPin, Mail, Phone, Clock, ArrowRight, ShieldCheck, CheckCircle2, MessageSquare, Heart } from 'lucide-react';
+import { MapPin, Mail, Phone, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import SEO from '../components/SEO';
+import RevealAnimation from '../components/UI/RevealAnimation';
+import RippleButton from '../components/UI/RippleButton';
 import { OFFICE_LOCATIONS } from '../data';
 
 type ContactChannel = 'general' | 'farmer' | 'media' | 'investor';
@@ -18,201 +20,173 @@ export default function Contact() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-    }, 6000);
+    setTimeout(() => setSubmitted(false), 6000);
   };
 
-  return (
-    <div id="contact-page-container" className="pt-24 min-h-screen bg-slate-50">
-      <SEO title="Contact Operations" description="Reach out to Cyano Foods India's Pune HQ, Anantapur regional centers, farmer support desk, or corporate PR team. Submit bulk trade inquiries." />
+  const channels: { id: ContactChannel; label: string }[] = [
+    { id: 'general', label: 'General & Sales' },
+    { id: 'farmer', label: 'Farmer Support' },
+    { id: 'media', label: 'PR & Media' },
+    { id: 'investor', label: 'Investor Liaison' },
+  ];
 
-      {/* Hero Header */}
-      <section id="contact-hero" className="bg-slate-900 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.1),transparent_50%)]" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-4">
-          <span className="text-emerald-400 font-bold font-mono tracking-widest text-xs uppercase">GLOBAL LOGISTICS HUB</span>
-          <h1 className="text-4xl sm:text-5xl font-bold font-display text-white">Contact Our Offices</h1>
-          <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-            Reach out directly to our processing facilities, biotech research benches, or localized Farmer Support desks.
+  return (
+    <div id="contact-page-container" className="min-h-screen bg-slate-50">
+      <SEO title="Contact Operations" description="Reach out to Cyano Foods India's Pune HQ, Anantapur regional centers, farmer support desk, or corporate PR team." />
+
+      {/* Hero */}
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-emerald-800 to-slate-900" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(201,162,39,0.1),transparent_60%)]" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+          <span className="text-emerald-300 font-semibold text-xs uppercase tracking-widest">Global Logistics Hub</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white font-display">Contact Our Offices</h1>
+          <p className="text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            Reach out to our processing facilities, biotech research benches, or localized Farmer Support desks.
           </p>
         </div>
       </section>
 
-      {/* Office Nodes Grid */}
-      <section id="contact-offices" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Office Cards */}
+      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {OFFICE_LOCATIONS.map((loc, idx) => (
-            <div id={`office-card-${idx}`} key={idx} className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-6">
-              <div className="space-y-4">
-                <span className="text-[10px] font-mono font-bold tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full uppercase">
-                  {idx === 0 ? "Corporate Headquarters & R&D" : "Deccan Southern Regional Hub"}
+            <RevealAnimation key={idx} direction="up" delay={idx * 0.1}>
+              <div className="glass-panel rounded-3xl p-8 card-lift space-y-6">
+                <span className="inline-block px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full uppercase">
+                  {idx === 0 ? 'Corporate HQ & R&D' : 'Deccan Southern Hub'}
                 </span>
-                <h3 className="text-xl font-bold font-display text-slate-900 leading-tight">
-                  {loc.name}
-                </h3>
-                <p className="text-slate-600 text-xs sm:text-sm font-sans leading-relaxed">
+                <h3 className="text-xl font-bold font-display text-slate-900">{loc.name}</h3>
+                <p className="text-slate-600 text-sm leading-relaxed flex items-start gap-2">
+                  <MapPin className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   {loc.address}
                 </p>
-              </div>
-
-              <div className="pt-6 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                <div className="space-y-1.5">
-                  <span className="text-slate-400 font-mono text-[9px] uppercase block">Phone Networks</span>
-                  <a href={`tel:${loc.phone}`} className="text-slate-900 font-bold font-mono hover:text-emerald-700 block">
-                    {loc.phone}
-                  </a>
+                <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <span className="text-xs text-slate-400 uppercase tracking-wider block mb-1">Phone</span>
+                    <a href={`tel:${loc.phone}`} className="text-slate-900 font-semibold hover:text-emerald-700 flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-emerald-600" /> {loc.phone}
+                    </a>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 uppercase tracking-wider block mb-1">Email</span>
+                    <a href={`mailto:${loc.email}`} className="text-slate-900 font-semibold hover:text-emerald-700 flex items-center gap-2 break-all">
+                      <Mail className="w-4 h-4 text-emerald-600 shrink-0" /> {loc.email}
+                    </a>
+                  </div>
                 </div>
-                <div className="space-y-1.5">
-                  <span className="text-slate-400 font-mono text-[9px] uppercase block">Official Email</span>
-                  <a href={`mailto:${loc.email}`} className="text-slate-900 font-bold font-mono hover:text-emerald-700 block break-all">
-                    {loc.email}
-                  </a>
-                </div>
               </div>
-            </div>
+            </RevealAnimation>
           ))}
         </div>
       </section>
 
-      {/* Interactive Map Visualizer & Form Split Grid */}
-      <section id="contact-form-section" className="py-16 bg-white border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
-          {/* Left: Vector Map Placeholder Box */}
-          <div className="lg:col-span-5 space-y-6">
-            <h3 className="text-xl font-bold font-display text-slate-900">Geographical Operations Map</h3>
-            <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
-              Our biotechnology formulation complex is situated in the Hinjawadi IT & Biotech Park in Pune, Maharashtra. Group certification audits and soil trials are co-managed via our sub-center in Anantapur, Andhra Pradesh.
-            </p>
-            
-            {/* Styled SVG Map Box */}
-            <div className="w-full h-72 border border-slate-200 rounded-2xl bg-slate-50 relative flex items-center justify-center p-6 select-none overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(16,185,129,0.05),transparent_40%)]" />
-              <div className="text-center space-y-3 relative z-10">
-                <span className="text-4xl">🗺️</span>
-                <div className="space-y-1">
-                  <span className="font-mono text-[10px] text-emerald-700 font-bold uppercase tracking-wider">Hinjawadi, Pune HQ Coordinates</span>
-                  <p className="text-slate-400 text-[11px] font-mono">18.5913° N, 73.7389° E</p>
-                  <p className="text-slate-400 text-[11px] font-mono">Anantapur Hub: 14.6819° N, 77.6006° E</p>
-                </div>
-                <div className="inline-flex gap-2 text-[10px] font-mono text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  Both Nodes Online
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Message Form with channel selectors */}
-          <div className="lg:col-span-7 bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-10 space-y-6">
-            <div className="space-y-2 border-b border-slate-200 pb-4">
-              <span className="text-[10px] font-mono font-bold text-emerald-700 uppercase tracking-widest block">
-                COMMUNICATIONS GATEWAY
-              </span>
-              <h3 className="text-xl font-bold font-display text-slate-900">Send an Operational Message</h3>
-              <p className="text-slate-500 text-xs">
-                Select your specific enquiry category to routing your packet to the appropriate division supervisor.
-              </p>
-            </div>
-
-            {/* Sub-channel tabs */}
-            <div className="flex flex-wrap gap-1.5">
-              <button
-                id="btn-channel-gen"
-                onClick={() => { setActiveChannel('general'); setSubmitted(false); }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${
-                  activeChannel === 'general' ? 'bg-emerald-700 text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                General & Sales
-              </button>
-              <button
-                id="btn-channel-farmer"
-                onClick={() => { setActiveChannel('farmer'); setSubmitted(false); }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${
-                  activeChannel === 'farmer' ? 'bg-emerald-700 text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                Farmer Support
-              </button>
-              <button
-                id="btn-channel-media"
-                onClick={() => { setActiveChannel('media'); setSubmitted(false); }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${
-                  activeChannel === 'media' ? 'bg-emerald-700 text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                PR & Media Desk
-              </button>
-              <button
-                id="btn-channel-invest"
-                onClick={() => { setActiveChannel('investor'); setSubmitted(false); }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${
-                  activeChannel === 'investor' ? 'bg-emerald-700 text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                Investor Liaison
-              </button>
-            </div>
-
-            {submitted ? (
-              <div id="contact-success" className="p-6 bg-emerald-50 border border-emerald-200 rounded-2xl text-center space-y-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto text-xl font-bold">✓</div>
-                <h4 className="font-bold font-display text-emerald-900 text-xs sm:text-sm">Enquiry Package Submitted</h4>
-                <p className="text-emerald-700 text-[11px] leading-relaxed max-w-sm mx-auto font-sans">
-                  Your communication has been dispatched to our databases. Your unique tracking ticket is registered locally. Our specialized team handles all responses within 48 operational hours.
+      {/* Split: Map + Form */}
+      <section className="section-padding bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Google Map */}
+          <RevealAnimation direction="left">
+            <div className="space-y-6 h-full">
+              <div>
+                <span className="text-emerald-600 font-semibold text-xs uppercase tracking-widest">Find Us</span>
+                <h3 className="text-2xl font-bold font-display text-slate-900 mt-2">Geographical Operations</h3>
+                <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                  Our biotechnology complex is in Hinjawadi IT & Biotech Park, Pune. Regional operations co-managed from Anantapur, Andhra Pradesh.
                 </p>
               </div>
-            ) : (
-              <form id="contact-message-form" onSubmit={handleSubmit} className="space-y-4 font-sans text-xs">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="block font-semibold text-slate-700">Full Name *</label>
-                    <input type="text" required className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-emerald-500" placeholder="e.g., Dr. Avanish Kumar" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="block font-semibold text-slate-700">Email Address *</label>
-                    <input type="email" required className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-emerald-500" placeholder="e.g., info@cyanofoods.com" />
-                  </div>
-                </div>
+              <div className="rounded-3xl overflow-hidden shadow-premium-lg h-[400px] lg:h-[500px] border border-slate-100">
+                <iframe
+                  title="Cyano Foods India Location"
+                  src="https://maps.google.com/maps?q=Hinjawadi,Pune,Maharashtra,India&z=14&output=embed"
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              </div>
+              <div className="flex items-center gap-2 text-sm text-emerald-700 font-semibold">
+                <CheckCircle2 className="w-4 h-4" />
+                Both operational nodes online
+              </div>
+            </div>
+          </RevealAnimation>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="block font-semibold text-slate-700">Contact Number *</label>
-                    <input type="tel" required className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-emerald-500" placeholder="e.g., +91 98765 43210" />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="block font-semibold text-slate-700">Subject / Intent *</label>
-                    <input type="text" required className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-emerald-500" placeholder="e.g., Requesting bulk raw samples" />
-                  </div>
-                </div>
+          {/* Contact Form */}
+          <RevealAnimation direction="right">
+            <div className="glass-panel rounded-3xl p-8 sm:p-10 space-y-6 h-full">
+              <div>
+                <span className="text-emerald-600 font-semibold text-xs uppercase tracking-widest">Communications Gateway</span>
+                <h3 className="text-2xl font-bold font-display text-slate-900 mt-2">Send a Message</h3>
+                <p className="text-slate-500 text-sm mt-2">Select your enquiry category for proper routing.</p>
+              </div>
 
-                <div className="space-y-1.5">
-                  <label className="block font-semibold text-slate-700">Detailed Message *</label>
-                  <textarea required rows={4} className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-emerald-500" placeholder="Briefly specify your structural requirements or bulk supply quantities." />
-                </div>
-
-                <div className="pt-4 border-t border-slate-200 flex items-center justify-between gap-4 text-xs font-mono text-[10px] text-slate-400">
-                  <span className="flex items-center gap-1">
-                    <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                    Secure Routing Enforced
-                  </span>
+              <div className="flex flex-wrap gap-2">
+                {channels.map((ch) => (
                   <button
-                    type="submit"
-                    className="px-6 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs font-display flex items-center justify-center gap-1 cursor-pointer transition-colors"
+                    key={ch.id}
+                    onClick={() => { setActiveChannel(ch.id); setSubmitted(false); }}
+                    className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                      activeChannel === ch.id
+                        ? 'bg-emerald-700 text-white shadow-md'
+                        : 'bg-white border border-slate-200 text-slate-700 hover:border-emerald-300'
+                    }`}
                   >
-                    Send Packet Message
-                    <ArrowRight className="w-4 h-4" />
+                    {ch.label}
                   </button>
-                </div>
-              </form>
-            )}
-          </div>
+                ))}
+              </div>
 
+              {submitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="p-8 bg-emerald-50 border border-emerald-200 rounded-2xl text-center space-y-3"
+                >
+                  <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto text-xl font-bold">✓</div>
+                  <h4 className="font-bold text-emerald-900">Enquiry Submitted Successfully</h4>
+                  <p className="text-emerald-700 text-sm">Our team will respond within 48 operational hours.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="block text-sm font-semibold text-slate-700">Full Name *</label>
+                      <input type="text" required className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500" placeholder="Your name" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="block text-sm font-semibold text-slate-700">Email *</label>
+                      <input type="email" required className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500" placeholder="your@email.com" />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="block text-sm font-semibold text-slate-700">Phone *</label>
+                      <input type="tel" required className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500" placeholder="+91 98765 43210" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="block text-sm font-semibold text-slate-700">Subject *</label>
+                      <input type="text" required className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500" placeholder="Your inquiry subject" />
+                    </div>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="block text-sm font-semibold text-slate-700">Message *</label>
+                    <textarea required rows={5} className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 resize-none" placeholder="Tell us about your requirements..." />
+                  </div>
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="flex items-center gap-1.5 text-xs text-slate-400">
+                      <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                      Secure routing enforced
+                    </span>
+                    <RippleButton type="submit" variant="primary">
+                      Send Message <ArrowRight className="w-4 h-4" />
+                    </RippleButton>
+                  </div>
+                </form>
+              )}
+            </div>
+          </RevealAnimation>
         </div>
       </section>
-
     </div>
   );
 }
