@@ -23,9 +23,9 @@ const GALLERY_RECORDS = [
 ];
 
 const NEWS_IMAGES = [
-  'https://images.unsplash.com/photo-1532187863486-abf9db3851ce?w=1200&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1464226187744-90997a736a1c?w=800&h=500&fit=crop',
-  'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=800&h=500&fit=crop',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsp3Q97NkoSd5ltvfaodapimbQhT0NFUSUbXaKuKvZqw&s=10',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsp3Q97NkoSd5ltvfaodapimbQhT0NFUSUbXaKuKvZqw&s=10',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2KOEZB1GimZlSdcxtHL5bjDoAPObSqRSnloglG_GTdw&s',
   'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=500&fit=crop',
 ];
 

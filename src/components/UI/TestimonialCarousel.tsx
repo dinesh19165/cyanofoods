@@ -28,7 +28,7 @@ const TESTIMONIALS = [
     id: 3,
     name: 'Prof. Anil Deshmukh',
     role: 'Director, National Biotech Institute',
-    photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA_aHIP7LySwyvflnF6H_vqAzw3K_YxMWQ4NfHSIFtmQ&s=10',
     rating: 5,
     text: 'Their research collaboration on Phycocyanin extraction has been groundbreaking. Cyano Foods bridges academic innovation with commercial viability like no other Indian biotech firm.',
   },

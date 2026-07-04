@@ -323,7 +323,7 @@ export default function Home() {
                 <div className="card-lift group bg-white rounded-3xl border border-slate-100 shadow-premium overflow-hidden hover:shadow-glow transition-all duration-500">
                   <div className="img-zoom-container h-52 relative">
                     <img
-                      src={PRODUCT_IMAGES[prod.id] || 'https://images.unsplash.com/photo-1576086213369-97a3d619cf1f?w=600&h=400&fit=crop'}
+                      src={PRODUCT_IMAGES[prod.id] || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2KOEZB1GimZlSdcxtHL5bjDoAPObSqRSnloglG_GTdw&s'}
                       alt={prod.name}
                       className="img-zoom w-full h-full object-cover"
                       loading="lazy"
@@ -634,7 +634,7 @@ export default function Home() {
                 <article className="card-lift group bg-white rounded-3xl border border-slate-100 shadow-premium overflow-hidden" data-aos="fade-up">
                   <div className="img-zoom-container h-48">
                     <img
-                      src={`https://images.unsplash.com/photo-${['1622206151226-18ca2c9ab4a1', '1464226187744-90997a736a1c', '1532187863486-abf9db3851ce'][i]}?w=600&h=300&fit=crop`}
+                      src={`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN3nnXL4AxpNAalhT4G9EK2pDugJZxHDHumCG2-hL5Wg&s=10`}
                       alt=""
                       className="img-zoom w-full h-full object-cover"
                       loading="lazy"

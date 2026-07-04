@@ -10,12 +10,12 @@ import { X, ZoomIn } from 'lucide-react';
 const GALLERY_IMAGES = [
   { id: 1, src: 'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=600&h=800&fit=crop', alt: 'Spirulina cultivation ponds', height: 'h-72' },
   { id: 2, src: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop', alt: 'Healthy organic food', height: 'h-48' },
-  { id: 3, src: 'https://images.unsplash.com/photo-1532187863486-abf9db3851ce?w=600&h=500&fit=crop', alt: 'Laboratory research', height: 'h-56' },
-  { id: 4, src: 'https://images.unsplash.com/photo-1464226187744-90997a736a1c?w=600&h=700&fit=crop', alt: 'Organic farming', height: 'h-64' },
+  { id: 3, src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSDhl05L3f3d5Da-uFDNQFWzRpJjSNDLlEeTI1vpVS6w&s=10', alt: 'Laboratory research', height: 'h-56' },
+  { id: 4, src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-AOXxOzn7d4Ary-4cHbFgo7Z9dZ8I1wz1amYUGB5jWg&s=10', alt: 'Organic farming', height: 'h-64' },
   { id: 5, src: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=450&fit=crop', alt: 'Manufacturing facility', height: 'h-52' },
   { id: 6, src: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=600&fit=crop', alt: 'Nature and sustainability', height: 'h-60' },
   { id: 7, src: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=500&fit=crop', alt: 'Green fields', height: 'h-56' },
-  { id: 8, src: 'https://images.unsplash.com/photo-1576086213369-97a3d619cf1f?w=600&h=400&fit=crop', alt: 'Spirulina powder product', height: 'h-48' },
+  { id: 8, src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC-cIdHuSl72aLuPr4oGwur1iF8IXpO2VpvGUkZZwaGQ&s=10', alt: 'Spirulina powder product', height: 'h-48' },
 ];
 
 export default function MasonryGallery() {

@@ -52,24 +52,34 @@ export default function Products() {
 
       {/* Gradient mesh hero with floating 3D products */}
       <section className="relative min-h-[90vh] overflow-hidden flex items-center">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_50%,rgba(15,107,62,0.4),transparent_50%),radial-gradient(ellipse_at_80%_20%,rgba(201,162,39,0.15),transparent_40%),radial-gradient(ellipse_at_60%_80%,rgba(46,139,87,0.3),transparent_50%)]" />
-        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-30">
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_20%_50%,rgba(15,107,62,0.4),transparent_50%),radial-gradient(ellipse_at_80%_20%,rgba(201,162,39,0.15),transparent_40%),radial-gradient(ellipse_at_60%_80%,rgba(46,139,87,0.3),transparent_50%)]" />
+        <video className="absolute inset-0 w-full h-full object-cover opacity-50">
           <source src={PAGE_VIDEOS.products} type="video/mp4" />
         </video>
 
-        {FLOATING_NUTRIENTS.map((n, i) => (
-          <motion.span
-            key={n}
-            className="absolute text-xs font-bold text-emerald-300/60 uppercase tracking-widest px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/10"
-            style={{ left: `${15 + (i * 14) % 70}%`, top: `${20 + (i * 11) % 60}%` }}
-            animate={{ y: [0, -12, 0], opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 4 + i, repeat: Infinity, delay: i * 0.3 }}
-          >
-            {n}
-          </motion.span>
-        ))}
+        {FLOATING_NUTRIENTS.map((item, i) => (
+  <motion.span
+    key={item.name}
+    className="absolute z-20 text-xs md:text-sm font-bold text-emerald-300/70 uppercase tracking-widest px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-md pointer-events-none"
+    style={{
+      left: item.left,
+      top: item.top,
+    }}
+    animate={{
+      y: [0, -10, 0],
+      opacity: [0.5, 1, 0.5],
+    }}
+    transition={{
+      duration: 5 + i,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  >
+    {item.name}
+  </motion.span>
+))}
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+        <div className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           <div className="space-y-6">
             <span className="text-emerald-400 text-xs font-semibold uppercase tracking-widest">Product Showcase</span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
@@ -116,7 +126,7 @@ export default function Products() {
               alt={heroProduct.name}
               animate={{ y: [0, -20, 0] }}
               transition={{ duration: 5, repeat: Infinity }}
-              className="relative z-10 w-48 h-64 object-cover rounded-3xl shadow-glow border-2 border-emerald-400/30"
+              className="relative z-40 w-48 h-64 object-cover rounded-3xl shadow-glow border-2 border-emerald-400/30"
             />
           </div>
         </div>
