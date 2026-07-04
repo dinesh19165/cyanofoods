@@ -7,6 +7,8 @@ import { useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Send, Linkedin, Twitter, Youtube, ShieldCheck, Award } from 'lucide-react';
 import RevealAnimation from '../UI/RevealAnimation';
+import FooterWave from '../UI/FooterWave';
+import BrandLogo from '../UI/BrandLogo';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -25,6 +27,7 @@ export default function Footer() {
 
   return (
     <footer id="main-app-footer" className="relative bg-slate-900 text-white overflow-hidden">
+      <FooterWave />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(46,139,87,0.15),transparent_60%)]" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
 
@@ -66,15 +69,7 @@ export default function Footer() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4 space-y-6">
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-500 text-white font-bold text-xl shadow-lg">
-                C
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold font-display tracking-tight">CYANO FOODS</span>
-                <span className="text-[9px] font-semibold tracking-widest text-emerald-400 uppercase">India OPC Pvt Ltd</span>
-              </div>
-            </Link>
+            <BrandLogo size="md" linkToHome showText className="[&_span]:text-white [&_.text-emerald-600]:text-emerald-400" />
             <p className="text-sm text-slate-400 leading-relaxed">
               Cyano Foods India is a global pioneer in microalgae biotechnology, climate-resilient natural agronomy, and clean functional nutrients.
             </p>

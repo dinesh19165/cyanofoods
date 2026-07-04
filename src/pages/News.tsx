@@ -6,23 +6,27 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { FileText, Camera, ArrowRight, Download, Calendar, Mail, FileIcon } from 'lucide-react';
+import { Camera, ArrowRight, Download, Calendar, Mail, FileIcon } from 'lucide-react';
 import SEO from '../components/SEO';
+import Marquee from '../components/UI/Marquee';
+import ReadingProgress from '../components/UI/ReadingProgress';
+import RevealAnimation from '../components/UI/RevealAnimation';
+import { PAGE_VIDEOS } from '../constants/brand';
 import { NEWS_LIST } from '../data';
 import { NewsItem } from '../types';
 
-interface GalleryItem {
-  title: string;
-  category: string;
-  desc: string;
-  emoji: string;
-}
-
-const GALLERY_RECORDS: GalleryItem[] = [
+const GALLERY_RECORDS = [
   { title: "Pune Biotechnology Complex", category: "R&D Complex", desc: "Aseptic laboratory benches, seed culture incubator chambers, and analytic chromatography setups.", emoji: "🔬" },
   { title: "Vertical Photobioreactor Block", category: "Production Block", desc: "Our patented closed-system borosilicate glass loop arrays capturing natural light spectrums.", emoji: "🧪" },
   { title: "Solar Post-Harvest Facility", category: "KhetiBharat", desc: "Thermodynamic post-harvest cleaning, grading, sorting, and dehydration lines powered entirely by solar energy.", emoji: "☀️" },
-  { title: "Anantapur Demonstration Farm", category: "Field Agronomy", desc: "Farmer training plots showcasing bio-stimulant soil treatments and multi-crop bio-diversity.", emoji: "🌾" }
+  { title: "Anantapur Demonstration Farm", category: "Field Agronomy", desc: "Farmer training plots showcasing bio-stimulant soil treatments and multi-crop bio-diversity.", emoji: "🌾" },
+];
+
+const NEWS_IMAGES = [
+  'https://images.unsplash.com/photo-1532187863486-abf9db3851ce?w=1200&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1464226187744-90997a736a1c?w=800&h=500&fit=crop',
+  'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=800&h=500&fit=crop',
+  'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=500&fit=crop',
 ];
 
 export default function News() {
@@ -33,272 +37,166 @@ export default function News() {
 
   useEffect(() => {
     if (newsId) {
-      const found = NEWS_LIST.find(n => n.id === newsId);
-      if (found) {
-        setSelectedArticle(found);
-      }
-    } else {
-      setSelectedArticle(null);
-    }
+      const found = NEWS_LIST.find((n) => n.id === newsId);
+      setSelectedArticle(found || null);
+    } else setSelectedArticle(null);
   }, [newsId]);
 
-  const openArticle = (id: string) => {
-    setSearchParams({ id });
-  };
-
-  const closeArticle = () => {
-    setSearchParams({});
-  };
-
-  const filteredNews = activeCategory === 'all'
-    ? NEWS_LIST
-    : NEWS_LIST.filter(n => n.category === activeCategory);
+  const featured = NEWS_LIST[0];
+  const filteredNews = activeCategory === 'all' ? NEWS_LIST.slice(1) : NEWS_LIST.filter((n) => n.category === activeCategory && n.id !== featured.id);
 
   return (
-    <div id="news-page-container" className="pt-24 min-h-screen bg-slate-50">
+    <div id="news-page-container" className="min-h-screen bg-[#faf9f7]">
+      <ReadingProgress />
       <SEO title="News Room & Media Kit" description="Access official Cyano Foods India press releases, success stories from KhetiBharat, upcoming food tech events, and our downloadable media kit." />
 
-      {/* Hero Header */}
-      <section id="news-hero" className="bg-slate-900 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.1),transparent_50%)]" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-4">
-          <span className="text-emerald-400 font-bold font-mono tracking-widest text-xs uppercase">CORPORATE COMMUNICATIONS</span>
-          <h1 className="text-4xl sm:text-5xl font-bold font-display text-white">Press Room & Media</h1>
-          <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-            Direct access to official announcements, agricultural breakthroughs, events, and brand compliance guidelines.
-          </p>
-        </div>
-      </section>
+      {/* News ticker */}
+      <div className="bg-emerald-900 text-emerald-100 py-2.5 border-b border-emerald-800">
+        <Marquee speed={20}>
+          {NEWS_LIST.map((n) => (
+            <span key={n.id} className="mx-8 text-sm font-medium">{n.title} • {n.date}</span>
+          ))}
+        </Marquee>
+      </div>
 
-      {/* Categories Filter tab */}
-      <section id="news-categories" className="py-8 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap gap-2 justify-center">
-          <button
-            id="cat-news-all"
-            onClick={() => setActiveCategory('all')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-semibold font-display transition-all cursor-pointer ${
-              activeCategory === 'all'
-                ? 'bg-emerald-700 text-white shadow-sm'
-                : 'bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100'
-            }`}
-          >
-            All Announcements
-          </button>
-          <button
-            id="cat-news-press"
-            onClick={() => setActiveCategory('news')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-semibold font-display transition-all cursor-pointer ${
-              activeCategory === 'news'
-                ? 'bg-emerald-700 text-white shadow-sm'
-                : 'bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100'
-            }`}
-          >
-            Press Releases
-          </button>
-          <button
-            id="cat-news-success"
-            onClick={() => setActiveCategory('success_story')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-semibold font-display transition-all cursor-pointer ${
-              activeCategory === 'success_story'
-                ? 'bg-emerald-700 text-white shadow-sm'
-                : 'bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100'
-            }`}
-          >
-            KhetiBharat Success Stories
-          </button>
-          <button
-            id="cat-news-events"
-            onClick={() => setActiveCategory('event')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-semibold font-display transition-all cursor-pointer ${
-              activeCategory === 'event'
-                ? 'bg-emerald-700 text-white shadow-sm'
-                : 'bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100'
-            }`}
-          >
-            Upcoming Events
-          </button>
-        </div>
-      </section>
-
-      {/* Main Grid: News Articles */}
-      <section id="news-grid-section" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredNews.map((news) => (
-            <div
-              id={`news-card-wrapper-${news.id}`}
-              key={news.id}
-              className="bg-white rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
-              onClick={() => openArticle(news.id)}
-            >
-              <div className="p-6 space-y-4">
-                <div className="flex justify-between items-center text-[10px] font-mono">
-                  <span className="text-emerald-700 font-bold uppercase bg-emerald-50 px-2 py-0.5 rounded-full">
-                    {news.categoryLabel}
-                  </span>
-                  <span className="text-slate-400">{news.date}</span>
-                </div>
-                <h3 className="text-base font-bold font-display text-slate-900 leading-snug line-clamp-2">
-                  {news.title}
-                </h3>
-                <p className="text-slate-500 text-xs leading-relaxed line-clamp-3">
-                  {news.summary}
-                </p>
-              </div>
-
-              <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-700 hover:text-emerald-700">
-                <span>Read Full Press Statement</span>
-                <ArrowRight className="w-4 h-4" />
-              </div>
+      {/* Magazine featured hero */}
+      <section className="relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[70vh]">
+          <div className="lg:col-span-8 relative overflow-hidden cursor-pointer group" onClick={() => setSearchParams({ id: featured.id })}>
+            <img src={NEWS_IMAGES[0]} alt="" className="w-full h-full min-h-[50vh] lg:min-h-[70vh] object-cover group-hover:scale-105 transition-transform duration-700" loading="eager" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-8 sm:p-12 text-white">
+              <span className="text-emerald-300 text-xs font-bold uppercase tracking-widest">{featured.categoryLabel}</span>
+              <h1 className="text-3xl sm:text-5xl font-bold mt-3 leading-tight font-display max-w-3xl">{featured.title}</h1>
+              <p className="text-slate-300 mt-4 max-w-2xl line-clamp-2">{featured.summary}</p>
+              <span className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-emerald-300">
+                Read Featured Story <ArrowRight className="w-4 h-4" />
+              </span>
             </div>
+          </div>
+          <div className="lg:col-span-4 bg-slate-900 flex flex-col">
+            <video autoPlay muted loop playsInline className="w-full h-48 lg:h-1/2 object-cover opacity-80">
+              <source src={PAGE_VIDEOS.news} type="video/mp4" />
+            </video>
+            <div className="p-8 flex-1 flex flex-col justify-center text-white">
+              <span className="text-emerald-400 text-xs uppercase tracking-widest">Corporate Communications</span>
+              <h2 className="text-2xl font-bold mt-2 font-display">Press Room & Media</h2>
+              <p className="text-slate-400 text-sm mt-3 leading-relaxed">Direct access to official announcements, agricultural breakthroughs, and brand compliance guidelines.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Category filter */}
+      <section className="sticky top-20 z-20 py-4 bg-[#faf9f7]/95 backdrop-blur border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 flex flex-wrap gap-2 justify-center">
+          {(['all', 'news', 'success_story', 'event'] as const).map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-5 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all ${
+                activeCategory === cat ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-400'
+              }`}
+            >
+              {cat === 'all' ? 'All' : cat === 'news' ? 'Press' : cat === 'success_story' ? 'Success Stories' : 'Events'}
+            </button>
           ))}
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section id="news-gallery" className="py-20 bg-slate-100 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-emerald-700 font-bold font-mono tracking-wider text-xs uppercase">VISUAL PORTFOLIO</span>
-            <h2 className="text-2xl sm:text-3xl font-bold font-display text-slate-900">Corporate Operations Gallery</h2>
-            <p className="text-slate-500 text-xs sm:text-sm">
-              An inside view of our biotechnology centers, vertical photobioreactors, and rural agronomical hubs.
-            </p>
-          </div>
+      {/* Article grid — magazine layout */}
+      <section className="py-16 max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {(activeCategory === 'all' ? NEWS_LIST.slice(1) : filteredNews).map((news, i) => (
+            <RevealAnimation key={news.id} direction="up" delay={i * 0.06}>
+              <article
+                onClick={() => setSearchParams({ id: news.id })}
+                className="group cursor-pointer bg-white rounded-none overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
+              >
+                <div className="img-zoom-container h-52">
+                  <img src={NEWS_IMAGES[(i + 1) % NEWS_IMAGES.length]} alt="" className="img-zoom w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div className="p-6 border-l-4 border-emerald-600">
+                  <div className="flex justify-between text-xs mb-2">
+                    <span className="font-bold text-emerald-700 uppercase">{news.categoryLabel}</span>
+                    <span className="text-slate-400">{news.date}</span>
+                  </div>
+                  <h3 className="font-bold text-lg font-display group-hover:text-emerald-700 transition-colors line-clamp-2">{news.title}</h3>
+                  <p className="text-slate-500 text-sm mt-2 line-clamp-2">{news.summary}</p>
+                </div>
+              </article>
+            </RevealAnimation>
+          ))}
+        </div>
+      </section>
 
+      {/* Gallery */}
+      <section className="py-20 bg-white border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 font-display">Corporate Operations Gallery</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {GALLERY_RECORDS.map((item, idx) => (
-              <div id={`gallery-card-${idx}`} key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 space-y-4 flex flex-col justify-between hover:shadow-md transition-all">
-                <div className="space-y-3">
-                  <div className="w-full h-32 bg-slate-50 border border-slate-200/60 rounded-xl flex items-center justify-center text-5xl select-none">
-                    {item.emoji}
-                  </div>
-                  <div>
-                    <span className="text-[9px] font-mono font-bold tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded uppercase">
-                      {item.category}
-                    </span>
-                    <h4 className="font-bold text-sm font-display text-slate-900 leading-tight mt-1">{item.title}</h4>
-                  </div>
-                  <p className="text-slate-500 text-[10.5px] leading-relaxed font-sans">{item.desc}</p>
-                </div>
-                <div className="pt-3 border-t border-slate-100 flex items-center gap-1.5 text-[10px] font-mono text-slate-400">
-                  <Camera className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Verified Photo Asset</span>
-                </div>
+              <div key={idx} className="p-6 bg-slate-50 rounded-2xl card-lift text-center">
+                <div className="text-5xl mb-4">{item.emoji}</div>
+                <span className="text-xs font-bold text-emerald-700 uppercase">{item.category}</span>
+                <h4 className="font-bold mt-2">{item.title}</h4>
+                <p className="text-slate-500 text-sm mt-2">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Media Kit and Downloads */}
-      <section id="news-mediakit" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          <div className="lg:col-span-6 space-y-6">
-            <h3 className="text-2xl font-bold font-display text-slate-900">Corporate Media Kit</h3>
-            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-sans">
-              Are you writing an article or covering our sustainable farmer integration models? Download our certified brand kit. It includes verified vector logo formats, authorized executive portraits, high-resolution processing photographs, and general company factsheets.
-            </p>
-            <div className="flex gap-4">
-              <Link
-                to="/downloads"
-                className="px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs font-display flex items-center gap-1.5 transition-colors"
-              >
-                <Download className="w-4 h-4" />
-                Download Brand Assets (.ZIP)
-              </Link>
-              <Link
-                to="/contact?tab=media"
-                className="px-5 py-3 rounded-xl border border-slate-200 hover:border-emerald-600 hover:text-emerald-700 text-slate-700 font-bold text-xs font-display flex items-center gap-1.5 transition-colors"
-              >
-                <Mail className="w-4 h-4" />
-                Contact PR Liaison
-              </Link>
-            </div>
+      {/* Media kit */}
+      <section className="py-20 max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12">
+        <div>
+          <h3 className="text-2xl font-bold mb-4">Corporate Media Kit</h3>
+          <p className="text-slate-600 text-sm leading-relaxed mb-6">
+            Download our certified brand kit including vector logos, executive portraits, and company factsheets.
+          </p>
+          <div className="flex gap-4 flex-wrap">
+            <Link to="/downloads" className="px-5 py-3 bg-slate-900 text-white rounded-xl text-sm font-bold inline-flex items-center gap-2">
+              <Download className="w-4 h-4" /> Brand Assets
+            </Link>
+            <Link to="/contact" className="px-5 py-3 border border-slate-200 rounded-xl text-sm font-bold inline-flex items-center gap-2">
+              <Mail className="w-4 h-4" /> Contact PR
+            </Link>
           </div>
-
-          <div className="lg:col-span-6 space-y-4">
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-4 text-xs font-sans">
+        </div>
+        <div className="space-y-4">
+          {['Cyano Foods Corporate Profile Sheet (PDF | 2.4 MB)', 'Vector Brand Guidelines & Logos (SVG/PNG | 4.8 MB)'].map((t) => (
+            <div key={t} className="p-4 bg-slate-50 rounded-xl flex gap-4 items-center">
               <FileIcon className="w-8 h-8 text-emerald-700 shrink-0" />
-              <div className="space-y-0.5">
-                <span className="font-bold text-slate-900 block">Cyano Foods Corporate Profile Sheet</span>
-                <p className="text-[10px] text-slate-500">Includes complete executive bios, founding narrative, and technology indicators. (PDF | 2.4 MB)</p>
-              </div>
+              <span className="text-sm font-semibold">{t}</span>
             </div>
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-4 text-xs font-sans">
-              <FileIcon className="w-8 h-8 text-emerald-700 shrink-0" />
-              <div className="space-y-0.5">
-                <span className="font-bold text-slate-900 block">Vector Brand Guidelines & Logos</span>
-                <p className="text-[10px] text-slate-500">Official vector and raster logos, color configurations, and usage parameters. (SVG/PNG | 4.8 MB)</p>
-              </div>
-            </div>
-          </div>
-
+          ))}
         </div>
       </section>
 
-      {/* Floating Article Modal Viewer */}
       <AnimatePresence>
         {selectedArticle && (
-          <div id="modal-backdrop" className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setSearchParams({})}>
             <motion.div
-              id="news-modal"
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-2xl w-full overflow-hidden flex flex-col max-h-[85vh]"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 30 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white max-w-2xl w-full max-h-[85vh] overflow-y-auto rounded-2xl"
             >
-              <div className="p-6 border-b border-slate-100 flex justify-between items-center shrink-0">
-                <div className="flex items-center gap-3">
-                  <span className="text-[10px] font-mono font-bold tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full uppercase">
-                    {selectedArticle.categoryLabel}
-                  </span>
-                  <span className="text-slate-400 font-mono text-[11px]">{selectedArticle.date}</span>
+              <div className="p-8">
+                <div className="flex justify-between items-start mb-6">
+                  <span className="text-xs font-bold text-emerald-700 uppercase">{selectedArticle.categoryLabel}</span>
+                  <button onClick={() => setSearchParams({})} className="text-slate-400 hover:text-slate-600 cursor-pointer text-xl">✕</button>
                 </div>
-                <button
-                  id="close-news-modal"
-                  onClick={closeArticle}
-                  className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-600 cursor-pointer"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="p-6 sm:p-8 space-y-6 overflow-y-auto font-sans text-slate-700 text-xs sm:text-sm leading-relaxed">
-                <h2 className="text-lg sm:text-2xl font-bold font-display text-slate-900 leading-snug">
-                  {selectedArticle.title}
-                </h2>
-                
-                <p className="font-semibold text-slate-900 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                  {selectedArticle.summary}
-                </p>
-
-                <p className="whitespace-pre-line">
-                  {selectedArticle.content}
-                </p>
-                
-                <p className="text-[11px] text-slate-400 italic">
-                  Pune Complex & Deccan Southern Board Verification Panel, {selectedArticle.date}.
-                </p>
-              </div>
-
-              <div className="p-6 border-t border-slate-100 flex items-center justify-between bg-slate-50 shrink-0 text-xs">
-                <span className="text-slate-400 flex items-center gap-1 font-mono text-[10px]">
-                  <Calendar className="w-4 h-4 text-emerald-500" />
-                  Released for General Distribution
-                </span>
-                <button
-                  onClick={closeArticle}
-                  className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs font-display cursor-pointer"
-                >
-                  Close Press Statement
-                </button>
+                <h2 className="text-2xl font-bold font-display mb-4">{selectedArticle.title}</h2>
+                <p className="text-slate-500 text-sm mb-2 flex items-center gap-1"><Calendar className="w-4 h-4" />{selectedArticle.date}</p>
+                <p className="font-semibold bg-slate-50 p-4 rounded-xl mb-6">{selectedArticle.summary}</p>
+                <p className="text-slate-700 leading-relaxed whitespace-pre-line">{selectedArticle.content}</p>
               </div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
-
     </div>
   );
 }

@@ -23,12 +23,19 @@ import RevealAnimation from '../components/UI/RevealAnimation';
 import Marquee from '../components/UI/Marquee';
 import TestimonialCarousel from '../components/UI/TestimonialCarousel';
 import MasonryGallery from '../components/UI/MasonryGallery';
+import FloatingLeaves from '../components/UI/FloatingLeaves';
+import GradientBlobs from '../components/UI/GradientBlobs';
+import { PAGE_VIDEOS, PRODUCT_IMAGES as BRAND_PRODUCT_IMAGES } from '../constants/brand';
 import {
   ABOUT_OVERVIEW, PRODUCTS_DATA, KHETI_BHARAT_DETAILS,
   NEWS_LIST, SUSTAINABILITY_ESG, FAQS_DATA
 } from '../data';
 
-const HERO_VIDEO = 'https://cdn.coverr.co/videos/coverr-green-algae-in-a-laboratory-9765/1080p.mp4';
+const HERO_FLOATING_STATS = [
+  { value: 20, suffix: '+', label: 'Products' },
+  { value: 15, suffix: '+', label: 'Countries' },
+  { value: 100, suffix: '%', label: 'Quality' },
+];
 
 const HOME_SERVICES = [
   { icon: Beaker, title: 'Research', desc: 'Translational microalgal strain improvement and bioactive extraction.', link: '/services?id=research' },
@@ -76,13 +83,7 @@ const CERTIFICATIONS = [
   { name: 'WHO', desc: 'WHO-GMP Compliant Facility' },
 ];
 
-const PRODUCT_IMAGES: Record<string, string> = {
-  'spirulina-powder': 'https://images.unsplash.com/photo-1576086213369-97a3d619cf1f?w=600&h=400&fit=crop',
-  'spirulina-crunchies': 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop',
-  'phycocyanin-blue': 'https://images.unsplash.com/photo-1550583724-b2692b85b199?w=600&h=400&fit=crop',
-  'cyano-soil-reviver': 'https://images.unsplash.com/photo-1464226187744-90997a736a1c?w=600&h=400&fit=crop',
-  'algal-omega3': 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=600&h=400&fit=crop',
-};
+const PRODUCT_IMAGES = BRAND_PRODUCT_IMAGES;
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<string | null>(null);
@@ -97,7 +98,8 @@ export default function Home() {
       gsap.from('.hero-title', { opacity: 0, y: 80, duration: 1.2, ease: 'power3.out', delay: 0.3 });
       gsap.from('.hero-subtitle', { opacity: 0, y: 60, duration: 1, ease: 'power3.out', delay: 0.6 });
       gsap.from('.hero-cta', { opacity: 0, y: 40, duration: 0.8, ease: 'power3.out', delay: 0.9, stagger: 0.15 });
-      gsap.from('.hero-float', { opacity: 0, scale: 0.8, duration: 1.5, ease: 'elastic.out(1, 0.5)', delay: 1.2, stagger: 0.2 });
+      gsap.from('.hero-bottle', { opacity: 0, y: 100, rotation: 15, duration: 1.4, ease: 'power3.out', delay: 0.8 });
+      gsap.from('.hero-stat', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out', delay: 1.1, stagger: 0.12 });
     }, heroRef);
     return () => ctx.revert();
   }, []);
@@ -125,19 +127,23 @@ export default function Home() {
         <video
           autoPlay muted loop playsInline
           className="absolute inset-0 w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=1920&h=1080&fit=crop"
+          poster="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&h=1080&fit=crop"
         >
-          <source src={HERO_VIDEO} type="video/mp4" />
+          <source src={PAGE_VIDEOS.home} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-900/90" />
-        <ParticleBackground count={40} color="rgba(46, 139, 87, 0.3)" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/85 via-emerald-950/70 to-slate-900/90" />
+        <GradientBlobs variant="mixed" />
+        <ParticleBackground count={50} color="rgba(46, 139, 87, 0.35)" />
+        <FloatingLeaves count={10} />
 
         {/* Floating shapes */}
         <div className="hero-float absolute top-1/4 left-[10%] w-20 h-20 rounded-full bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20 animate-float" />
         <div className="hero-float absolute top-1/3 right-[15%] w-32 h-32 rounded-3xl bg-emerald-400/5 backdrop-blur-sm border border-emerald-300/10 animate-float-slow rotate-12" />
         <div className="hero-float absolute bottom-1/4 left-[20%] w-16 h-16 rounded-2xl bg-amber-400/10 backdrop-blur-sm border border-amber-300/20 animate-float" style={{ animationDelay: '2s' }} />
 
-        <div className="hero-parallax relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-32">
+        <div className="hero-parallax relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 lg:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7 text-center lg:text-left">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -157,7 +163,7 @@ export default function Home() {
             Premium food manufacturing and nutraceutical solutions from India.
           </p>
 
-          <div className="hero-cta flex flex-wrap justify-center gap-4">
+          <div className="hero-cta flex flex-wrap justify-center lg:justify-start gap-4">
             <MagneticButton>
               <RippleButton to="/products" variant="primary">
                 Explore Products <ArrowRight className="w-4 h-4" />
@@ -168,6 +174,42 @@ export default function Home() {
                 Contact Us
               </RippleButton>
             </MagneticButton>
+          </div>
+
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4 mt-10">
+            {HERO_FLOATING_STATS.map((stat) => (
+              <div key={stat.label} className="hero-stat glass-panel-dark rounded-2xl px-5 py-3 text-center min-w-[100px]">
+                <div className="text-2xl font-bold text-emerald-300 font-display">
+                  <CountUp end={stat.value} suffix={stat.suffix} />
+                </div>
+                <div className="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+            </div>
+
+            {/* Floating 3D product bottle */}
+            <div className="lg:col-span-5 hidden lg:flex justify-center items-center relative">
+              <div className="hero-bottle relative">
+                <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-3xl scale-75 animate-pulse" />
+                <motion.div
+                  animate={{ y: [0, -16, 0], rotateY: [0, 8, 0, -8, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                  className="relative"
+                >
+                  <img
+                    src={BRAND_PRODUCT_IMAGES['phycocyanin-blue']}
+                    alt="Cyano Foods Spirulina Product"
+                    className="w-72 h-96 object-cover rounded-3xl shadow-2xl shadow-emerald-900/40 border border-white/20"
+                    loading="eager"
+                  />
+                  <div className="absolute -bottom-4 -right-4 glass-panel-dark rounded-2xl px-4 py-3 text-left">
+                    <p className="text-emerald-300 text-xs font-bold uppercase">Featured</p>
+                    <p className="text-white text-sm font-display font-semibold">Phycocyanin Extract</p>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -9,6 +9,7 @@ import { MapPin, Mail, Phone, ArrowRight, ShieldCheck, CheckCircle2 } from 'luci
 import SEO from '../components/SEO';
 import RevealAnimation from '../components/UI/RevealAnimation';
 import RippleButton from '../components/UI/RippleButton';
+import { PAGE_VIDEOS, LOGO_PATH } from '../constants/brand';
 import { OFFICE_LOCATIONS } from '../data';
 
 type ContactChannel = 'general' | 'farmer' | 'media' | 'investor';
@@ -84,17 +85,25 @@ export default function Contact() {
       {/* Split: Map + Form */}
       <section className="section-padding bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Google Map */}
           <RevealAnimation direction="left">
             <div className="space-y-6 h-full">
               <div>
                 <span className="text-emerald-600 font-semibold text-xs uppercase tracking-widest">Find Us</span>
                 <h3 className="text-2xl font-bold font-display text-slate-900 mt-2">Geographical Operations</h3>
-                <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                  Our biotechnology complex is in Hinjawadi IT & Biotech Park, Pune. Regional operations co-managed from Anantapur, Andhra Pradesh.
-                </p>
               </div>
-              <div className="rounded-3xl overflow-hidden shadow-premium-lg h-[400px] lg:h-[500px] border border-slate-100">
+              {/* 3D office illustration */}
+              <div className="relative rounded-3xl overflow-hidden shadow-premium-lg h-64 lg:h-80 bg-gradient-to-br from-emerald-100 to-slate-100 flex items-center justify-center">
+                <motion.img
+                  src={LOGO_PATH}
+                  alt="Cyano Foods"
+                  animate={{ y: [0, -12, 0], rotateY: [0, 10, 0, -10, 0] }}
+                  transition={{ duration: 6, repeat: Infinity }}
+                  className="w-32 h-32 object-contain drop-shadow-2xl relative z-10"
+                />
+                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-emerald-800/20 to-transparent" />
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTTAgNDBIMzkuOVYwSDQwdjQwSDB6TTQwIDQwVjM5LjlIMFY0MFoiIGZpbGw9IiMwRjZCM0UiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNnKSIvPjwvc3ZnPg==')] opacity-50" />
+              </div>
+              <div className="rounded-3xl overflow-hidden shadow-premium-lg h-[300px] border border-slate-100">
                 <iframe
                   title="Cyano Foods India Location"
                   src="https://maps.google.com/maps?q=Hinjawadi,Pune,Maharashtra,India&z=14&output=embed"
@@ -104,10 +113,7 @@ export default function Contact() {
                   allowFullScreen
                 />
               </div>
-              <div className="flex items-center gap-2 text-sm text-emerald-700 font-semibold">
-                <CheckCircle2 className="w-4 h-4" />
-                Both operational nodes online
-              </div>
+              <p className="text-sm text-slate-500">Hinjawadi IT & Biotech Park, Pune • Anantapur Regional Hub</p>
             </div>
           </RevealAnimation>
 

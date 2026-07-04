@@ -8,6 +8,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, ChevronDown, Search, ArrowRight, Sprout, ShieldAlert, Award, FileText, Info } from 'lucide-react';
 import MagneticButton from '../UI/MagneticButton';
+import BrandLogo from '../UI/BrandLogo';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,24 +78,7 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-700 to-emerald-500 text-white font-bold text-xl shadow-lg shadow-emerald-900/20 group-hover:scale-105 transition-transform duration-300">
-              C
-              <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-amber-400 rounded-full border-2 border-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className={`text-lg font-bold font-display tracking-tight leading-none transition-colors ${
-                isTransparent ? 'text-white group-hover:text-emerald-300' : 'text-slate-900 group-hover:text-emerald-700'
-              }`}>
-                CYANO FOODS
-              </span>
-              <span className={`text-[9px] font-semibold tracking-widest leading-none mt-1 uppercase ${
-                isTransparent ? 'text-emerald-300' : 'text-emerald-600'
-              }`}>
-                India OPC Pvt Ltd
-              </span>
-            </div>
-          </Link>
+          <BrandLogo size="md" className={isTransparent ? '[&_span]:text-white [&_.text-emerald-600]:text-emerald-300' : ''} />
 
           <nav className="hidden lg:flex items-center gap-1">
             <Link

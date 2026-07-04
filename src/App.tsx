@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, lazy, Suspense, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import AOS from 'aos';
@@ -12,6 +12,7 @@ import Footer from './components/Layout/Footer';
 import ScrollProgress from './components/UI/ScrollProgress';
 import CustomCursor from './components/UI/CustomCursor';
 import WhatsAppButton from './components/UI/WhatsAppButton';
+import PremiumLoader from './components/UI/PremiumLoader';
 import { SmoothScrollProvider } from './components/UI/PageTransition';
 
 const Home = lazy(() => import('./pages/Home'));
@@ -61,23 +62,23 @@ function AnimatedRoutes() {
       >
         <Suspense fallback={<PageLoader />}>
           <Routes location={location}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/regional-council" element={<RegionalCouncil />} />
-          <Route path="/khetibharat" element={<KhetiBharat />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/research" element={<Research />} />
-          <Route path="/sustainability" element={<Sustainability />} />
-          <Route path="/partner" element={<Partner />} />
-          <Route path="/knowledge-centre" element={<KnowledgeCentre />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/downloads" element={<Downloads />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/legal" element={<Legal />} />
-          <Route path="*" element={<Home />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/regional-council" element={<RegionalCouncil />} />
+            <Route path="/khetibharat" element={<KhetiBharat />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/research" element={<Research />} />
+            <Route path="/sustainability" element={<Sustainability />} />
+            <Route path="/partner" element={<Partner />} />
+            <Route path="/knowledge-centre" element={<KnowledgeCentre />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/downloads" element={<Downloads />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/legal" element={<Legal />} />
+            <Route path="*" element={<Home />} />
           </Routes>
         </Suspense>
       </motion.div>
@@ -102,6 +103,8 @@ function AppRoutes() {
 }
 
 export default function App() {
+  const [appReady, setAppReady] = useState(false);
+
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -113,11 +116,14 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <SmoothScrollProvider>
-        <div id="app-root-layout" className="flex flex-col min-h-screen bg-slate-50 text-slate-900 font-sans">
-          <AppRoutes />
-        </div>
-      </SmoothScrollProvider>
+      {!appReady && <PremiumLoader onComplete={() => setAppReady(true)} />}
+      {appReady && (
+        <SmoothScrollProvider>
+          <div id="app-root-layout" className="flex flex-col min-h-screen bg-slate-50 text-slate-900 font-sans">
+            <AppRoutes />
+          </div>
+        </SmoothScrollProvider>
+      )}
     </BrowserRouter>
   );
 }
