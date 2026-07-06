@@ -313,15 +313,24 @@ export default function KhetiBharat() {
           </RevealAnimation>
 
           <div className="relative mt-14">
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-6">
+            <div className="flex flex-col gap-6 md:flex-row md:flex-wrap xl:flex-nowrap xl:items-center xl:justify-between">
               {FARMER_JOURNEY.map((step, index) => (
-                <RevealAnimation key={step.title} direction="up" delay={index * 0.06}>
-                  <motion.div whileHover={{ y: -8, scale: 1.02 }} className="rounded-[24px] border border-emerald-100 bg-white/80 p-6 shadow-[0_20px_48px_rgba(14,92,54,0.08)]">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0E5C36] text-sm font-bold text-white">{step.step}</div>
-                    <h3 className="mt-4 text-lg font-semibold text-slate-900">{step.title}</h3>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">{step.desc}</p>
-                  </motion.div>
-                </RevealAnimation>
+                <div key={step.title} className="flex items-center gap-4 w-full xl:flex-1">
+                  <RevealAnimation direction="up" delay={index * 0.06}>
+                    <motion.div whileHover={{ y: -8, scale: 1.02 }} className="mx-auto w-full max-w-[320px] rounded-[24px] border border-emerald-100 bg-white/80 p-6 shadow-[0_20px_48px_rgba(14,92,54,0.08)]">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0E5C36] text-sm font-bold text-white">{step.step}</div>
+                      <h3 className="mt-4 text-lg font-semibold text-slate-900">{step.title}</h3>
+                      <p className="mt-2 text-sm leading-7 text-slate-600">{step.desc}</p>
+                    </motion.div>
+                  </RevealAnimation>
+
+                  {/* connector shown only on extra-large screens between cards */}
+                  {index < FARMER_JOURNEY.length - 1 && (
+                    <div className="hidden xl:flex items-center">
+                      <div className="h-1 w-12 bg-[#0E5C36] rounded-sm" aria-hidden="true" />
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>
