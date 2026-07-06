@@ -236,6 +236,15 @@
   @apply py-24 lg:py-32;
 }
 
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -10px, 0); }
+}
+
+.animate-drift {
+  animation: drift 6s ease-in-out infinite;
+}
+
 /* Card hover lift */
 .card-lift {
   @apply transition-all duration-500 ease-out;
