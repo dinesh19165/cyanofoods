@@ -1,4 +1,4 @@
-export const LOGO_PATH = '/assets/cyano-logo.png';
+export const LOGO_PATH = '/assets/cyano-logo-transparent.png';
 
 export const PAGE_VIDEOS = {
   home: 'https://www.shutterstock.com/shutterstock/videos/4039673635/thumb/1.jpg?ip=x480',

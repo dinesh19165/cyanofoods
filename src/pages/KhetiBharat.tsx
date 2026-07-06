@@ -34,6 +34,7 @@ import SEO from '../components/SEO';
 import CountUp from '../components/UI/CountUp';
 import MagneticButton from '../components/UI/MagneticButton';
 import RevealAnimation from '../components/UI/RevealAnimation';
+import EcosystemGraph from '../components/UI/EcosystemGraph';
 import { KHETI_BHARAT_DETAILS } from '../data';
 
 const HERO_STATS = [
@@ -78,13 +79,13 @@ const PROGRAM_CARDS = [
 ];
 
 const ECOSYSTEM_NODES = [
-  { label: 'Farmers', position: 'left-[8%] top-[20%]' },
-  { label: 'Cyano Foods', position: 'left-[40%] top-[10%]' },
-  { label: 'Regional Councils', position: 'left-[72%] top-[18%]' },
-  { label: 'Scientists', position: 'left-[72%] top-[72%]' },
-  { label: 'Buyers', position: 'right-[8%] top-[34%]' },
-  { label: 'Government', position: 'left-[28%] bottom-[14%]' },
-  { label: 'Consumers', position: 'right-[12%] bottom-[18%]' },
+  { label: 'Cyano Foods', position: 'left-[42%] top-[34%]' },
+  { label: 'Farmers', position: 'left-[10%] top-[26%]' },
+  { label: 'Regional Councils', position: 'left-[70%] top-[24%]' },
+  { label: 'Scientists', position: 'left-[66%] top-[62%]' },
+  { label: 'Buyers', position: 'left-[72%] top-[40%]' },
+  { label: 'Government', position: 'left-[14%] top-[62%]' },
+  { label: 'Consumers', position: 'left-[68%] top-[76%]' },
 ];
 
 const KNOWLEDGE_ITEMS = [
@@ -312,7 +313,6 @@ export default function KhetiBharat() {
           </RevealAnimation>
 
           <div className="relative mt-14">
-            <div className="absolute left-0 right-0 top-12 hidden h-px bg-gradient-to-r from-transparent via-emerald-300 to-transparent md:block" />
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-6">
               {FARMER_JOURNEY.map((step, index) => (
                 <RevealAnimation key={step.title} direction="up" delay={index * 0.06}>
@@ -444,22 +444,8 @@ export default function KhetiBharat() {
           </RevealAnimation>
 
           <div className="mt-14 rounded-[36px] border border-emerald-100 bg-[radial-gradient(circle_at_center,rgba(56,180,106,0.12),transparent_42%),linear-gradient(135deg,#f8fef8,#f3f8ed)] p-8 shadow-[0_25px_80px_rgba(14,92,54,0.08)] lg:p-10">
-            <div className="relative mx-auto flex min-h-[520px] max-w-5xl items-center justify-center overflow-hidden rounded-[28px] border border-white/80 bg-white/60">
-              <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(56,180,106,0.16),transparent_60%)]" />
-              <svg viewBox="0 0 800 520" className="absolute inset-0 h-full w-full">
-                <path d="M230 160 C 330 120, 470 120, 570 170" stroke="#38B46A" strokeWidth="2.5" strokeDasharray="8 8" fill="none" />
-                <path d="M230 180 C 300 230, 360 250, 430 260" stroke="#0E5C36" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
-                <path d="M580 200 C 630 260, 610 340, 560 390" stroke="#C8A648" strokeWidth="2.5" strokeDasharray="7 7" fill="none" />
-                <path d="M240 350 C 330 380, 410 385, 520 360" stroke="#38B46A" strokeWidth="2.5" strokeDasharray="6 6" fill="none" />
-                <path d="M240 170 C 190 230, 180 320, 230 360" stroke="#0E5C36" strokeWidth="2.5" strokeDasharray="7 7" fill="none" />
-                <path d="M560 180 C 610 220, 610 310, 560 360" stroke="#C8A648" strokeWidth="2.5" strokeDasharray="8 8" fill="none" />
-              </svg>
-              {ECOSYSTEM_NODES.map((node) => (
-                <motion.div key={node.label} whileHover={{ scale: 1.05 }} className={`absolute ${node.position} rounded-full border border-white/80 bg-[#0E5C36] px-4 py-2 text-sm font-semibold text-white shadow-[0_15px_40px_rgba(14,92,54,0.18)]`}>
-                  {node.label}
-                </motion.div>
-              ))}
-              <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 18, ease: 'linear' }} className="absolute h-28 w-28 rounded-full border border-dashed border-emerald-300/70" />
+            <div className="relative mx-auto flex min-h-[520px] max-w-5xl items-center justify-center overflow-hidden rounded-[28px] border border-white/80 bg-white/60 p-6">
+              <EcosystemGraph nodes={ECOSYSTEM_NODES.map(n => n.label)} size={760} centerLabel="Cyano Foods" />
             </div>
           </div>
         </div>
