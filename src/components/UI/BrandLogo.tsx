@@ -11,9 +11,9 @@ interface BrandLogoProps {
 
 const sizes = {
   sm: { img: 'w-9 h-9', title: 'text-sm', sub: 'text-[8px]' },
-  md: { img: 'w-11 h-11', title: 'text-lg', sub: 'text-[9px]' },
-  lg: { img: 'w-20 h-20', title: 'text-2xl', sub: 'text-[10px]' },
-  xl: { img: 'w-32 h-32', title: 'text-3xl', sub: 'text-xs' },
+  md: { img: 'w-16 h-16', title: 'text-xl', sub: 'text-[10px]' },
+  lg: { img: 'w-24 h-24', title: 'text-3xl', sub: 'text-xs' },
+  xl: { img: 'w-36 h-36', title: 'text-4xl', sub: 'text-sm' },
 };
 
 export default function BrandLogo({ size = 'md', showText = true, className = '', linkToHome = true, animate = false }: BrandLogoProps) {
